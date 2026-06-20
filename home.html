@@ -111,12 +111,11 @@
 
     /* ROUTE CARD */
     .route-card {
-      margin: 14px 14px 10px;
+      margin: 0 0 10px;
       background: linear-gradient(135deg, #3a6fd8 0%, #6b3fa0 100%);
       border-radius: 14px;
       padding: 20px 20px 18px;
       color: #fff;
-      flex-shrink: 0;
     }
     .route-top { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 10px; }
     .route-arrow { text-align: center; font-size: 25px; margin-bottom: 10px; }
@@ -129,12 +128,12 @@
       color: rgba(255,255,255,0.95);
     }
 
-    /* SCROLLABLE MIDDLE - everything below header+route scrolls */
+    /* SCROLLABLE MIDDLE - everything below header scrolls, footer stays fixed */
     .scroll-area {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      padding: 0 14px 14px;
+      padding: 14px 14px 14px;
       -webkit-overflow-scrolling: touch;
       
       
@@ -214,6 +213,40 @@
   display: block;
 }
 
+    /* DETAILS VIEW - replaces the QR inside the same Confirmed Bus Pass box */
+    .details-view {
+      padding: 22px 22px 26px;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .detail-col { flex: 1; }
+    .detail-col.align-right { text-align: right; }
+    .detail-label {
+      font-size: 12.5px;
+      color: #9b9b9b;
+      margin-bottom: 5px;
+      font-weight: 400;
+    }
+    .detail-value {
+      font-size: 16.5px;
+      color: #2b2b2b;
+      font-weight: 600;
+    }
+    .detail-route {
+      text-align: center;
+      font-size: 13.5px;
+      color: #2b2b2b;
+      font-weight: 500;
+      line-height: 1.55;
+      margin-top: 4px;
+      padding-top: 10px;
+      border-top: 1px dashed #e2e2e2;
+    }
+
     /* VIEW DETAILS inside scroll */
     .view-btn-wrap {
       padding: 14px 0 0;
@@ -232,7 +265,7 @@
     }
     .view-btn:active { opacity: 0.85; }
 
-    /* TCS FOOTER - fixed at bottom */
+    /* TCS FOOTER - fixed at bottom (shorter than before) */
     .tcs-footer {
       flex-shrink: 0;
       background: #fff;
@@ -240,22 +273,23 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      padding: 10px 20px 16px;
+      padding: 5px 20px 7px;
       border-top: 1px solid #ececec;
     }
     .tcs-logo-text {
-      font-size: 50px;
+      font-size: 36px;
       font-weight: 500px;
       color: #000;
       letter-spacing: -1px;
       font-style: bold;
+      line-height: 1;
     }
     
     .tcs-company {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 750;
       color: #000;
-      line-height: 1.4;
+      line-height: 1.3;
       letter-spacing: 1px;
     }
     
@@ -290,19 +324,19 @@
       </button>
     </div>
 
-    <!-- ROUTE CARD (fixed, not scrolling) -->
-    <div class="route-card">
-      <div class="route-top">Suraj Water Park</div>
-      <div class="route-arrow">&#8644;</div>
-      <div class="route-bottom">Kensington</div>
-      <div class="route-times">
-        <span>Office In - 07:30</span>
-        <span>Office Out - 18:55</span>
-      </div>
-    </div>
-
-    <!-- SCROLLABLE SECTION -->
+    <!-- SCROLLABLE SECTION: starts right below header, ends at footer -->
     <div class="scroll-area">
+
+      <!-- ROUTE CARD (now scrolls with the rest of the content) -->
+      <div class="route-card">
+        <div class="route-top">Suraj Water Park</div>
+        <div class="route-arrow">&#8644;</div>
+        <div class="route-bottom">Kensington</div>
+        <div class="route-times">
+          <span>Office In - 07:30</span>
+          <span>Office Out - 18:55</span>
+        </div>
+      </div>
 
       <div class="pass-card">
         <div class="pass-header">
@@ -313,19 +347,60 @@
           <div class="pass-title">Confirmed Bus Pass</div>
         </div>
         <hr class="pass-divider">
-        <div class="qr-top-space"></div>
-        <div class="qr-wrapper">
-          <div class="qr-img">
-            <img src="Gemini_Generated_Image_h7igioh7igioh7ig.png" alt="QR Code"
-              onerror="this.style.display='none';this.parentNode.innerHTML='[ QR Code Image ]'">
+
+        <!-- QR VIEW (default) -->
+        <div class="qr-view" id="qrView">
+          <div class="qr-top-space"></div>
+          <div class="qr-wrapper">
+            <div class="qr-img">
+              <img src="Gemini_Generated_Image_h7igioh7igioh7ig.png" alt="QR Code"
+                onerror="this.style.display='none';this.parentNode.innerHTML='[ QR Code Image ]'">
+            </div>
+          </div>
+          <div class="qr-bottom-space"></div>
+        </div>
+
+        <!-- DETAILS VIEW (hidden until "View Details" is tapped) -->
+        <div class="details-view" id="detailsView" style="display:none;">
+          <div class="detail-row">
+            <div class="detail-col">
+              <div class="detail-label">Name</div>
+              <div class="detail-value">SIVARAM M R</div>
+            </div>
+            <div class="detail-col align-right">
+              <div class="detail-label">Employee ID</div>
+              <div class="detail-value">2871424</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-col">
+              <div class="detail-label">Bus Stop Name</div>
+              <div class="detail-value">Suraj Water Park</div>
+            </div>
+            <div class="detail-col align-right">
+              <div class="detail-label">Route Type</div>
+              <div class="detail-value">Both</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-col">
+              <div class="detail-label">Start Date</div>
+              <div class="detail-value">4th Jun, 2026</div>
+            </div>
+            <div class="detail-col align-right">
+              <div class="detail-label">End Date</div>
+              <div class="detail-value">30th Jun, 2026</div>
+            </div>
+          </div>
+          <div class="detail-route">
+            Route : Suraj Water Park To Kensington<br>And Return Via-Via EEH
           </div>
         </div>
-        <div class="qr-bottom-space"></div>
       </div>
 
-      <!-- VIEW DETAILS inside scroll -->
+      <!-- VIEW DETAILS / VIEW QR toggle -->
       <div class="view-btn-wrap">
-        <button class="view-btn">View Details</button>
+        <button class="view-btn" id="viewBtn">View Details</button>
       </div>
 
     </div>
@@ -361,6 +436,23 @@
     lockPortrait();
     window.addEventListener('load', lockPortrait);
     document.addEventListener('fullscreenchange', lockPortrait);
+
+    // --- Toggle between QR and Details inside the Confirmed Bus Pass box ---
+    const viewBtn = document.getElementById('viewBtn');
+    const qrView = document.getElementById('qrView');
+    const detailsView = document.getElementById('detailsView');
+    viewBtn.addEventListener('click', function () {
+      const showingDetails = detailsView.style.display !== 'none';
+      if (showingDetails) {
+        detailsView.style.display = 'none';
+        qrView.style.display = '';
+        viewBtn.textContent = 'View Details';
+      } else {
+        qrView.style.display = 'none';
+        detailsView.style.display = 'block';
+        viewBtn.textContent = 'View QR';
+      }
+    });
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js');
