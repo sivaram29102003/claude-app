@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Menu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: transparent;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .sidebar-screen {
+      width: 100%;
+      max-width: 430px;
+      height: 100vh;
+      height: 100dvh;
+      margin: 0 auto;
+      display: flex;
+      position: relative;
+    }
+
+    /* ── 80% LEFT PANEL ── */
+    .sidebar-panel {
+      width: 80%;
+      height: 100%;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 4px 0 16px rgba(0,0,0,0.22);
+    }
+
+    /* ── NAVY HEADER — logo space only, no bell ── */
+    .sidebar-header {
+      background: #1e1f6b;
+      padding: 18px 20px 16px;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      gap: 14px;
+    }
+
+    /* Invisible square placeholder for logo */
+    .logo-placeholder {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 6px;
+      /* completely invisible — just reserves space */
+      background: transparent;
+    }
+
+    .sidebar-greeting {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.2px;
+    }
+
+    /* ── MENU LIST — white, reduced gaps ── */
+    .menu-list {
+      flex: 1;
+      background: #fff;
+      padding: 4px 0 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .menu-list::-webkit-scrollbar { display: none; }
+
+    /* Top group: Home → Back To Home Page (tightly spaced) */
+    .menu-top {
+      flex-shrink: 0;
+    }
+
+    /* Settings sits at vertical center of remaining space */
+    .menu-middle {
+      flex: 1;
+      display: flex;
+      align-items: center;   /* vertically centres Settings */
+    }
+    .menu-middle .menu-item {
+      width: 100%;
+    }
+
+    /* Logout pinned just below Settings with white space beneath */
+    .menu-bottom {
+      flex-shrink: 0;
+      padding-bottom: 32px;  /* white breathing room at the very bottom */
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 11px 22px;    /* reduced from 16px to 11px top/bottom */
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.12s ease;
+    }
+    .menu-item:active { background: rgba(0,0,0,0.06); }
+
+    .menu-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      color: #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-icon svg { width: 22px; height: 22px; }
+
+    .menu-text {
+      font-size: 15px;
+      font-weight: 400;
+      color: #222;
+    }
+
+    /* ── RIGHT 20% DIM ── */
+    .sidebar-dim {
+      width: 20%;
+      height: 100%;
+      background: rgba(0,0,0,0.45);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar-screen">
+
+    <div class="sidebar-panel">
+
+      <!-- HEADER: invisible logo square + greeting, NO bell -->
+      <div class="sidebar-header">
+        <div class="logo-placeholder"></div>
+        <span class="sidebar-greeting">Hi, SIVARAM M R</span>
+      </div>
+
+      <div class="menu-list">
+
+        <!-- TOP GROUP: tightly spaced items -->
+        <div class="menu-top">
+
+          <!-- Home -->
+          <div class="menu-item" onclick="go('home.html')">
+            <span class="menu-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+            </span>
+            <span class="menu-text">Home</span>
+          </div>
+
+          <!-- Apply Bus Pass -->
+          <div class="menu-item" id="applyItem">
+            <span class="menu-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="6" width="22" height="14" rx="2"/>
+                <path d="M1 10h22"/>
+                <circle cx="7" cy="15" r="1" fill="currentColor"/>
+                <rect x="10" y="13" width="7" height="2" rx="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </span>
+            <span class="menu-text">Apply Bus Pass</span>
+          </div>
+
+          <!-- Buspass Request Status -->
+          <div class="menu-item" onclick="go('home.html')">
+            <span class="menu-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="9" y1="13" x2="15" y2="13"/>
+                <line x1="9" y1="17" x2="12" y2="17"/>
+                <polyline points="14 17 15 18 17 16"/>
+              </svg>
+            </span>
+            <span class="menu-text">Buspass Request Status</span>
+          </div>
+
+          <!-- FeedBack History -->
+          <div class="menu-item" onclick="go('home.html')">
+            <span class="menu-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v5h5"/>
+                <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/>
+                <line x1="12" y1="7" x2="12" y2="12"/>
+                <line x1="12" y1="15" x2="12.01" y2="15" stroke-width="2.5"/>
+              </svg>
+            </span>
+            <span class="menu-text">FeedBack History</span>
+          </div>
+
+          <!-- Back To Home Page -->
+          <div class="menu-item" onclick="go('home.html')">
+            <span class="menu-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v5h5"/>
+                <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/>
+              </svg>
+            </span>
+            <span class="menu-text">Back To Home Page</span>
+          </div>
+
+        </div>
+        <!-- END TOP GROUP -->
+
+        <!-- MIDDLE: Settings vertically centred in remaining space -->
+        <div class="menu-middle">
+          <div class="menu-item" onclick="go('home.html')">
+            <span class="menu-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06
+                         a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09
+                         A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83
+                         l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09
+                         A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83
+                         l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09
+                         a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83
+                         l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09
+                         a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </span>
+            <span class="menu-text">Settings</span>
+          </div>
+        </div>
+
+        <!-- BOTTOM: Logout + white space below -->
+        <div class="menu-bottom">
+          <div class="menu-item" onclick="go('home.html')">
+            <span class="menu-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+            </span>
+            <span class="menu-text">Logout</span>
+          </div>
+        </div>
+
+      </div>
+      <!-- END MENU LIST -->
+
+    </div>
+    <!-- END SIDEBAR PANEL -->
+
+    <!-- Right 20% dim — tap to close -->
+    <div class="sidebar-dim" onclick="go('home.html')"></div>
+
+  </div>
+
+  <script>
+    function go(url) {
+      window.location.href = url;
+    }
+
+    document.getElementById('applyItem').addEventListener('click', function () {
+      this.style.background = 'rgba(0,0,0,0.08)';
+      setTimeout(function () {
+        window.location.href = 'applybpass.html';
+      }, 140);
+    });
+  </script>
+</body>
+</html>
